@@ -1,6 +1,5 @@
 const container = document.querySelector(".container");
 const newGridButton = document.querySelector("#newGrid");
-let opacity = 0.1;
 makeGrid(16, 16);
 addEventListener("mouseover" , draw);
 newGridButton.addEventListener("click", makeNewGrid);
@@ -21,19 +20,25 @@ function makeGrid(sizeX, sizeY) {
         for (x = 1; x < sizeX + 1; x++) { 
             cell = document.createElement("div");
             cell.classList.add("cell");
-            cell.id = "cell-" + ((y-1)*16 + x)
+            cell.id = "cell-" + ((y-1)*16 + x);
+            cell.style["background-color"] = "rgba(0, 0, 0, 0)";
             column.appendChild(cell);
         }
     }
 }
 function draw(element) {
     if (element.target.classList == "cell") {
-        const backgroundColor = `rgb(${getRandomIntInclusive(0, 255)}, ${getRandomIntInclusive(0, 255)}, ${getRandomIntInclusive(0, 255)})`;
-        element.target.style["background-color"] = backgroundColor;
-        element.target.style.opacity = opacity;
-        if (opacity < 1) {
-            opacity = Math.round((opacity + 0.1) * 10) / 10;
+        const elementRGBA = element.target.style["background-color"].split(",")
+        let alpha = 1;
+        if (elementRGBA[3]) {
+            alpha = Number(elementRGBA[3].slice(0, -1));
         }
+        if (alpha < 1) {
+            alpha = Math.round((alpha + 0.1) * 10) / 10;
+        }
+        const backgroundColor = `rgba(${getRandomIntInclusive(0, 255)}, ${getRandomIntInclusive(0, 255)}, ${getRandomIntInclusive(0, 255)}, ${alpha})`;
+        element.target.style["background-color"] = backgroundColor;
+        
     }
 }
 function makeNewGrid() {
