@@ -1,9 +1,15 @@
 const container = document.querySelector(".container");
 const newGridButton = document.querySelector("#newGrid");
+let opacity = 0.1;
 makeGrid(16, 16);
 addEventListener("mouseover" , draw);
 newGridButton.addEventListener("click", makeNewGrid);
 
+function getRandomIntInclusive(min, max) {
+    const minCeiled = Math.ceil(min);
+    const maxFloored = Math.floor(max);
+    return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
+  }
 function makeGrid(sizeX, sizeY) {
     let column;
     let cell;
@@ -22,7 +28,12 @@ function makeGrid(sizeX, sizeY) {
 }
 function draw(element) {
     if (element.target.classList == "cell") {
-        element.target.style["background-color"] = "blue";
+        const backgroundColor = `rgb(${getRandomIntInclusive(0, 255)}, ${getRandomIntInclusive(0, 255)}, ${getRandomIntInclusive(0, 255)})`;
+        element.target.style["background-color"] = backgroundColor;
+        element.target.style.opacity = opacity;
+        if (opacity < 1) {
+            opacity = Math.round((opacity + 0.1) * 10) / 10;
+        }
     }
 }
 function makeNewGrid() {
