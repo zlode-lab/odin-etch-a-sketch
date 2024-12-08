@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    width: 800px;
+    height: 800px;
+}
+.column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.cell {
+    border: black solid 1px;
+    flex: 1;
+}
